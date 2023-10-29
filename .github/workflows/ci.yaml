@@ -33,16 +33,18 @@ jobs:
       # configure gcloud `setup-gcloud` automatically
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0.4.0'
+        uses: 'google-github-actions/auth@v1'
         with:
           workload_identity_provider: 'projects/143616246873/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-provider'
           service_account: 'github-actions@static-resume-386719.iam.gserviceaccount.com'
 
+      # Install gcloud, `setup-gcloud` automatically picks up authentication from `auth`.
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
-        with:
-          version: '>= 363.0.0'
 
-      - name: 'Use gcloud CLI'
-        run: 'gcloud projects list'
+      # Now you can run gcloud commands authenticated as the impersonated service account.
+      - id: 'gcloud'
+        name: 'gcloud'
+        run: |-
+          gcloud storage cp ./public/* gs://dansc0de -r --project static-resume-386719
 
