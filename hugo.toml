@@ -1,0 +1,15 @@
+baseURL = 'https://dansc0de.run'
+languageCode = 'en-us'
+title = 'dansc0de.run'
+
+theme = 'risotto'
+
+[menus]
+[[menus.main]]
+  name = 'Resume'
+  url = '/resume'
+  weight = 200
+[[menus.main]]
+  name = 'Contact'
+  url = '/contact'
+  weight = 300
