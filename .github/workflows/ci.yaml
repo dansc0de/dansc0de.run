@@ -44,5 +44,5 @@ jobs:
           version: '>= 363.0.0'
 
       - name: 'Use gcloud CLI'
-        run: 'ls -lash ./public'
+        run: 'gcloud storage cp ./public/* gs://dansc0de -r'
 
