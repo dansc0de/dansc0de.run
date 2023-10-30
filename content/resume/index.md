@@ -5,7 +5,7 @@ date = "2023-10-29"
 author = "Dan Mahoney"
 +++
 
-## Dan Mahoney - Senior Site Reliability Engineer
+## Dan Mahoney - Sr. Site Reliability Engineer
 
 
 ### Summary
