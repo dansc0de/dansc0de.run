@@ -1,6 +1,10 @@
-# Hey There, I'm Dan
++++
+title = "dansc0de"
++++
 
-Welcome to my corner of the internet. I am a software engineer, and I am creating this page for a few reasons:
+## hey there, I'm Dan
 
-1. This site is part of a larger project for a course I am teaching at the University of Pittsburgh. I am using this site to demonstrate how to host static site on GCP.
-2. TBD
+welcome to my corner of the internet. I am a software engineer, and this site is for a few things:
+
+- this site is for my class I am teaching at the University of Pittsburgh
+- host my resume and blog posts I have not written
