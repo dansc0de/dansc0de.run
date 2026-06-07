@@ -3,24 +3,23 @@ name: Static Site
 on:
   push:
     branches:
-      - main  # Set a branch to deploy
-      - gha-service-account
+      - main
   pull_request:
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-22.04
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true  # Fetch Hugo themes (true OR recursive)
-          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+          submodules: true
+          fetch-depth: 0
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
@@ -30,19 +29,14 @@ jobs:
       - name: Build
         run: hugo --minify
 
-      # configure gcloud `setup-gcloud` automatically
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v1'
-        with:
-          workload_identity_provider: 'projects/143616246873/locations/global/workloadIdentityPools/gh-actions-pool/providers/gh-actions-provider'
-          service_account: 'github-actions-service-account@static-resume-386719.iam.gserviceaccount.com'
+      - name: Archive site
+        run: tar -czf site.tar.gz -C public .
 
-      # upload files to GCS
-      - id: 'upload-static-files'
-        uses: 'google-github-actions/upload-cloud-storage@v1'
+      - name: Create release
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
         with:
-          path: 'public'
-          destination: 'dansc0de'
-          parent: false
-
+          tag_name: release-${{ github.sha }}
+          name: Release ${{ github.sha }}
+          files: site.tar.gz
+          make_latest: "true"
